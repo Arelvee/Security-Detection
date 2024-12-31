@@ -12,12 +12,15 @@
             font-family: Arial, sans-serif;
             background-image: url('/static/bg-cover.png');
             background-size: cover;
+            background-position: center;
             background-repeat: no-repeat;
+            background-attachment: fixed;
             margin: 0;
             padding: 0;
             height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
         }
 
         .register-container {
@@ -30,7 +33,7 @@
             max-width: 450px;
             width: 100%;
             margin-left: auto;
-            margin-right: 50px;
+            margin-right: auto;
         }
 
         h2 {
@@ -95,6 +98,53 @@
             justify-content: space-between;
             gap: 10px;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .register-container {
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .form-control {
+                font-size: 1em;
+                padding: 10px;
+            }
+
+            .btn-custom, .btn-cancel {
+                font-size: 1em;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h2 {
+                font-size: 1.2em;
+            }
+
+            .form-control {
+                font-size: 0.95em;
+                padding: 8px;
+            }
+
+            .btn-custom, .btn-cancel {
+                font-size: 0.95em;
+                padding: 8px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn-cancel, .btn-custom {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -104,19 +154,19 @@
         <form action="/register" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
-                <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username">
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
             </div>
             <div class="mb-3">
                 <label for="confirm-password" class="form-label">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" class="form-control" placeholder="Confirm your password">
+                <input type="password" id="confirm-password" name="confirm-password" class="form-control" placeholder="Confirm your password" required>
             </div>
             <div class="button-group">
                 <button type="button" class="btn btn-cancel w-50" onclick="window.location.href='./login.html'">Cancel</button>
