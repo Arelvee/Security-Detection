@@ -1,7 +1,7 @@
 import subprocess
 
 # Define the paths to your camera scripts
-camera_scripts = ['python cam1.py',
+camera_scripts = ['python cam3.py',
                   'python app.py']
 
 

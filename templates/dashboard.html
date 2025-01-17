@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-time Surveillance System with Weapon Detection and Armed-Personnel Recognition</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+        crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-gray-100 h-screen">
     <div class="flex h-full">
         <!-- Sidebar -->
-        <aside class="fixed inset-y-0 left-0 w-64 bg-blue-600 text-white z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300" id="sidebar">
+        <aside
+            class="fixed inset-y-0 left-0 w-64 bg-blue-600 text-white z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300"
+            id="sidebar">
             <div class="p-4 bg-blue-700 flex justify-between items-center md:hidden">
                 <span class="font-bold text-2xl">Dashboard</span>
                 <button onclick="toggleSidebar()" class="text-white text-2xl">
@@ -53,7 +56,8 @@
 
             <main id="main-content" class="flex-grow p-8">
                 <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                    <h1 class="text-gray-800 text-3xl font-bold mb-4">Real-time Surveillance System with Weapon Detection and Armed-Personnel Recognition</h1>
+                    <h1 class="text-gray-800 text-3xl font-bold mb-4">Real-time Surveillance System with Weapon
+                        Detection and Armed-Personnel Recognition</h1>
                     <p class="text-gray-600">Navigate through the menu to explore the features.</p>
                 </div>
             </main>
@@ -64,7 +68,8 @@
                     <a href="#" class="text-2xl font-semibold text-gray-900">
                         <span>Real-time Surveillance System</span>
                     </a>
-                    <p class="my-4 text-gray-500">Your trusted platform for quality services. Connecting you to the world of weapon detection and armed-personnel recognition.</p>
+                    <p class="my-4 text-gray-500">Your trusted platform for quality services. Connecting you to the
+                        world of weapon detection and armed-personnel recognition.</p>
                     <ul class="flex justify-center space-x-4">
                         <li><a href="#" class="hover:underline">About</a></li>
                         <li><a href="#" class="hover:underline">Services</a></li>
@@ -82,15 +87,37 @@
         function updateContent(section) {
             const sections = {
                 'live-feed': `
-                    <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                        <h1 class="text-gray-800 text-3xl font-bold mb-4">Live Camera Feed</h1>
-                        <p class="text-gray-600">Here you can view the live camera feed.</p>
-                    </div>`,
-                'records': `
-                    <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                        <h1 class="text-gray-800 text-3xl font-bold mb-4">View Detections</h1>
-                        <p class="text-gray-600">Here you can view all the records of detected events.</p>
-                    </div>`
+            <div class="bg-white shadow-lg rounded-lg p-6">
+    <div class="text-center mb-6">
+        <h1 class="text-gray-800 text-3xl font-bold">Live Camera Feed</h1>
+        <p class="text-gray-500 mt-2">Monitor the live feed in real-time with detailed system information below.</p>
+    </div>
+    <div class="flex justify-center bg-gray-200 p-4 rounded-md shadow-inner border border-gray-300">
+        <img id="video-feed" 
+             src="http://127.0.0.1:5000/video_feed" 
+             class="w-full max-w-4xl rounded-lg" 
+             alt="Live Video Feed" 
+             onerror="this.onerror=null; this.src='/images/placeholder.png';">
+    </div>
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+            <h2 class="text-gray-700 text-lg font-semibold mb-3 text-center">Feed Information</h2>
+            <ul class="text-gray-600 space-y-2">
+                <li><strong>Status:</strong> <span class="text-green-600">Active</span></li>
+                <li><strong>Resolution:</strong> 1920x1080</li>
+                <li><strong>Frame Rate:</strong> 30 FPS</li>
+            </ul>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+            <h2 class="text-gray-700 text-lg font-semibold mb-3 text-center">System Status</h2>
+            <ul class="text-gray-600 space-y-2">
+                <li><strong>Detection:</strong> <span class="text-green-600">Active</span></li>
+                <li><strong>Last Update:</strong> 2 mins ago</li>
+                <li><strong>Alerts:</strong> None</li>
+            </ul>
+        </div>
+    </div>
+</div>`
             };
 
             document.getElementById('main-content').innerHTML = sections[section] || '';
