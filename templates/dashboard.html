@@ -84,57 +84,70 @@
     </div>
 
     <script>
-        function updateContent(section) {
-            const sections = {
-                'live-feed': `
+ function updateContent(section) {
+    const sections = {
+        'live-feed': `
             <div class="bg-white shadow-lg rounded-lg p-6">
-    <div class="text-center mb-6">
-        <h1 class="text-gray-800 text-3xl font-bold">Live Camera Feed</h1>
-        <p class="text-gray-500 mt-2">Monitor the live feed in real-time with detailed system information below.</p>
-    </div>
-    <div class="flex justify-center bg-gray-200 p-4 rounded-md shadow-inner border border-gray-300">
-        <img id="video-feed" 
-             src="http://127.0.0.1:5000/video_feed" 
-             class="w-full max-w-4xl rounded-lg" 
-             alt="Live Video Feed" 
-             onerror="this.onerror=null; this.src='/images/placeholder.png';">
-    </div>
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
-            <h2 class="text-gray-700 text-lg font-semibold mb-3 text-center">Feed Information</h2>
-            <ul class="text-gray-600 space-y-2">
-                <li><strong>Status:</strong> <span class="text-green-600">Active</span></li>
-                <li><strong>Resolution:</strong> 1920x1080</li>
-                <li><strong>Frame Rate:</strong> 30 FPS</li>
-            </ul>
-        </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
-            <h2 class="text-gray-700 text-lg font-semibold mb-3 text-center">System Status</h2>
-            <ul class="text-gray-600 space-y-2">
-                <li><strong>Detection:</strong> <span class="text-green-600">Active</span></li>
-                <li><strong>Last Update:</strong> 2 mins ago</li>
-                <li><strong>Alerts:</strong> None</li>
-            </ul>
-        </div>
-    </div>
-</div>`
-            };
+                <div class="text-center mb-6">
+                    <h1 class="text-gray-800 text-3xl font-bold">Live Camera Feed</h1>
+                    <p class="text-gray-500 mt-2">Monitor the live feed in real-time with detailed system information below.</p>
+                </div>
+                <div class="flex justify-center bg-gray-200 p-4 rounded-md shadow-inner border border-gray-300">
+                    <img id="video-feed" 
+                        src="http://127.0.0.1:5000/video_feed" 
+                        class="w-full max-w-4xl rounded-lg" 
+                        alt="Live Video Feed"
+                        onerror="this.onerror=null; this.src='/images/placeholder.png';">
+                </div>
+            </div>`,
 
-            document.getElementById('main-content').innerHTML = sections[section] || '';
-        }
+        'records': `
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h1 class="text-gray-800 text-3xl font-bold text-center">Captured Records</h1>
+                <p class="text-gray-500 text-center mt-2">List of detected images.</p>
+                <div id="image-gallery" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6"></div>
+            </div>`
+    };
 
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const isHidden = sidebar.classList.contains('-translate-x-full');
+    document.getElementById('main-content').innerHTML = sections[section] || '';
 
-            if (isHidden) {
-                sidebar.classList.remove('-translate-x-full');
-                sidebar.classList.add('translate-x-0');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                sidebar.classList.remove('translate-x-0');
-            }
-        }
+    // ✅ Load images dynamically after switching to 'records'
+    if (section === 'records') {
+        loadGallery();
+    }
+}
+
+function loadGallery() {
+    fetch('/get_images')
+        .then(response => response.json())
+        .then(data => {
+            console.log("Fetched Images:", data.images); // ✅ Debugging Line
+            let gallery = document.getElementById('image-gallery');
+            gallery.innerHTML = ''; // Clear previous images
+            data.images.forEach(img => {
+                let imgElement = document.createElement('img');
+                imgElement.src = `/detected_images/${img}`;  // ✅ Updated Path
+                imgElement.alt = 'Detected Image';
+                imgElement.classList.add('w-full', 'h-48', 'object-cover', 'rounded-lg', 'shadow-md');
+                gallery.appendChild(imgElement);
+            });
+        })
+        .catch(error => console.error('Error loading images:', error));
+}
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('-translate-x-full');
+    sidebar.classList.toggle('translate-x-0');
+}
+
+// ✅ Auto-refresh gallery every 5 seconds for real-time updates
+setInterval(() => {
+    const currentSection = document.getElementById('main-content').innerHTML;
+    if (currentSection.includes("Captured Records")) {
+        loadGallery();
+    }
+}, 5000);
     </script>
 </body>
 
